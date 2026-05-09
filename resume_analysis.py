@@ -9,7 +9,7 @@ from dotenv import load_dotenv
 load_dotenv()
 
 # Groq API Configuration
-GROQ_API_KEY = os.getenv("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")
+GROQ_API_KEY = os.getenv("Your_api_key")
 GROQ_MODEL = "openai/gpt-oss-120b"
 GROQ_URL = "https://api.groq.com/openai/v1/chat/completions"
 
