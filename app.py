@@ -77,7 +77,30 @@ if page == "🏠 Home":
     - Groq API
     - PyMuPDF
     """)
+   
+    st.markdown("---")
 
+    st.markdown("""
+<div style="
+    text-align: center;
+    padding: 14px;
+    font-size: 17px;
+    font-style: italic;
+    font-weight: bold;
+    font-family: 'Segoe UI', sans-serif;
+    letter-spacing: 0.5px;
+">
+    ☕ Made with passion by 
+    <span style="
+        background: linear-gradient(90deg, #00C9FF, #92FE9D);
+        -webkit-background-clip: text;
+        -webkit-text-fill-color: transparent;
+        font-weight: 800;
+    ">
+        Yash Umate
+    </span>
+</div>
+""", unsafe_allow_html=True)
 # Resume Analysis Page
 elif page == "📊 Resume Analysis":
 
