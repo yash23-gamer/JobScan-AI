@@ -1,5 +1,5 @@
 import os
-import fitz  # PyMuPDF
+import fitz # PyMuPDF
 import requests
 import json
 import streamlit as st
@@ -9,7 +9,7 @@ from dotenv import load_dotenv
 load_dotenv()
 
 # Groq API Configuration
-GROQ_API_KEY = os.getenv("Your_api_key")
+GROQ_API_KEY =os.getenv("GROQ_API_KEY")
 GROQ_MODEL = "openai/gpt-oss-120b"
 GROQ_URL = "https://api.groq.com/openai/v1/chat/completions"
 

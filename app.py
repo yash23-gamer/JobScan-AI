@@ -2,70 +2,129 @@ import streamlit as st
 import requests
 from resume_analysis import analyze_resume
 
-# Streamlit UI Configuration
-st.set_page_config(page_title="JobScan Pro", layout="wide", initial_sidebar_state="expanded")
+# Page Configuration
+st.set_page_config(
+    page_title="JobScan Pro",
+    page_icon="📄",
+    layout="wide",
+    initial_sidebar_state="expanded"
+)
 
-# Custom CSS for improved UI
+# Custom CSS
 def set_custom_css():
-    st.markdown(
-        """
+    st.markdown("""
         <style>
         body {
             background-color: #1E1E1E;
             color: #F5F5F5;
-            font-family: 'Arial', sans-serif;
+            font-family: Arial, sans-serif;
         }
-        .stTextInput, .stTextArea, .stSelectbox, .stFileUploader, .stButton {
-            background-color: #2A2A2A !important;
-            color: #F5F5F5 !important;
-            border-radius: 10px !important;
-        }
+
         .stButton > button {
-            background-color: #4CAF50 !important;
-            color: white !important;
-            border-radius: 10px !important;
+            background-color: #4CAF50;
+            color: white;
+            border-radius: 10px;
             font-size: 16px;
+            padding: 10px 20px;
+            border: none;
         }
+
         .stButton > button:hover {
-            background-color: #45A049 !important;
+            background-color: #45A049;
+        }
+
+        .stTextArea textarea {
+            border-radius: 10px;
+        }
+
+        .stFileUploader {
+            border-radius: 10px;
         }
         </style>
-        """,
-        unsafe_allow_html=True
-    )
+    """, unsafe_allow_html=True)
 
 set_custom_css()
 
-# Sidebar Navigation
+# Sidebar
 st.sidebar.title("📑 Navigation")
-page = st.sidebar.radio("", ["🏠 Home", "📊 Resume Analysis"])
+
+page = st.sidebar.radio(
+    "Go To",
+    ["🏠 Home", "📊 Resume Analysis"]
+)
 
 # Home Page
 if page == "🏠 Home":
+
     st.title("🚀 Welcome to JobScan Pro")
-    st.write("Compare your resume with job descriptions and improve your chances of landing your dream job!")
+
+    st.markdown("""
+    ### AI-Powered ATS Resume Analyzer
+
+    Compare your resume with job descriptions and improve your chances of getting shortlisted.
+
+    ### Features
+    - 📈 ATS Match Score
+    - ❌ Missing Keywords Detection
+    - 💡 Skill Suggestions
+    - 📝 Resume Feedback
+    - 🚀 Skill Gap Analysis
+    - ✅ Job Role Suggestions
+
+    ### Tech Stack
+    - Python
+    - Streamlit
+    - Groq API
+    - PyMuPDF
+    """)
 
 # Resume Analysis Page
 elif page == "📊 Resume Analysis":
-    st.title("📑 Resume Analysis")
-    
-    job_description = st.text_area("📝 Paste the Job Description here:", height=200)
-    uploaded_file = st.file_uploader("📂 Upload Your Resume (PDF only)", type=["pdf"])
 
-    analysis_type = st.selectbox("🔍 Choose Analysis Type", [
-        "📈 Match Score", "❌ Missing Keywords", "💡 Skill Suggestions",
-        "📝 AI-Powered Resume Feedback", "📥 Download Optimized Resume",
-        "✅ Bullet Point Suggestions", "🚀 Skill Gap Analysis", "✅ Job Suggestion"
-    ])
+    st.title("📊 Resume Analysis")
+
+    job_description = st.text_area(
+        "📝 Paste Job Description",
+        height=200,
+        placeholder="Paste the job description here..."
+    )
+
+    uploaded_file = st.file_uploader(
+        "📂 Upload Resume (PDF Only)",
+        type=["pdf"]
+    )
+
+    analysis_type = st.selectbox(
+        "🔍 Select Analysis Type",
+        [
+            "📈 Match Score",
+            "❌ Missing Keywords",
+            "💡 Skill Suggestions",
+            "📝 AI-Powered Resume Feedback",
+            "📥 Download Optimized Resume",
+            "✅ Bullet Point Suggestions",
+            "🚀 Skill Gap Analysis",
+            "✅ Job Suggestion"
+        ]
+    )
 
     if st.button("🚀 Run Analysis"):
-        if uploaded_file is not None and job_description.strip():
-            st.success("✅ Analysis in Progress... Please wait.")
 
-            # Call the analysis function
-            analysis_result = analyze_resume(uploaded_file, job_description, analysis_type)
+        if uploaded_file is not None and job_description.strip():
+
+            with st.spinner("🔍 Analyzing Resume... Please wait"):
+
+                analysis_result = analyze_resume(
+                    uploaded_file,
+                    job_description,
+                    analysis_type
+                )
 
             st.success("✅ Analysis Complete!")
-            st.markdown(analysis_result, unsafe_allow_html=True)
+
+            st.markdown("### 📊 Analysis Result")
+
+            st.markdown(analysis_result)
+
         else:
-            st.error("⚠ Please upload a resume and provide a job description!")
+            st.error("⚠ Please upload a resume and paste a job description.")
